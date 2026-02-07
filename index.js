@@ -9,9 +9,12 @@ app.use("/static", express.static("static", { maxAge: "365d" }));
 
 app.use(
   basicAuth({
-    users: { user: "VzGkffaInLnmi7k82TjrV6Z1" },
+    authorizer: (username, password) => {
+        // Barebones auth, any username works.
+        return password == "VzGkffaInLnmi7k82TjrV6Z1";
+    },
     challenge: true,
-    realm: "confusables-game",
+    realm: 'confusables-game',
   }),
 );
 
@@ -22,7 +25,6 @@ app.get("/", function (req, res) {
 
 app.post("/record", express.json(), function (req, res) {
   const statement = db.prepare('INSERT INTO confusables (timestamp, user, confusable, alphabet) VALUES (?, ?, ?, ?)');
-  console.log("Recording for %s!", req.auth.user, req.body);
   statement.run(Date.now(), req.auth.user, req.body.confusable, req.body.alphabet);  
   res.status(202).send();
 });
