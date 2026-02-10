@@ -16,7 +16,9 @@ html {
   padding: 0;
   background-color: var(--background-color);
   color: var(--foreground-color);
+  min-height: 100%;
 }
+
 main {
   max-width: 60em;
   margin: auto;
@@ -61,4 +63,12 @@ p {
 span {
   outline: 1px dotted;
   padding: 0.1em;
+}
+
+small.pi {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+  color: #ccc;
 }

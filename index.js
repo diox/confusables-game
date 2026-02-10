@@ -18,6 +18,12 @@ app.use(
   }),
 );
 
+app.get("/known", function (req, res) {
+  const statement = db.prepare("SELECT DISTINCT(confusable) FROM confusables");
+  statement.pluck();
+  res.status(200).send(statement.all());
+});
+
 app.get("/", function (req, res) {
   // Might be a real view template someday... but not now.
   res.status(200).sendFile(path.join(__dirname, "/views/index.html"));

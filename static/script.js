@@ -10,6 +10,27 @@ async function fetchData() {
   return response.json();
 }
 
+async function restrictToUnknown() {
+  if (availableCharacters.length > 1) {
+    const response = await fetch("/known?2026-02-10");
+    const known = new Set(await response.json());
+    const available = new Set(availableCharacters);
+    availableCharacters = Array.from(available.difference(known));
+    console.log("%s left", availableCharacters.length);
+  }
+}
+
+function addPraetorians() {
+  let pi = document.createElement("small");
+  pi.textContent = "𝜋";
+  pi.className = "pi";
+  document.body.appendChild(pi);
+  pi.addEventListener("click", function () {
+    restrictToUnknown();
+    document.body.removeChild(pi);
+  });
+}
+
 async function init() {
   availableCharacters = await fetchData();
   alphabet.addEventListener("click", function (e) {
@@ -43,6 +64,7 @@ async function init() {
 
   main.style.visibility = "visible";
   newGame();
+  addPraetorians();
 }
 
 function newGame() {
@@ -68,7 +90,7 @@ function recordConfusable(confusableCharacter, alphabetCharacter) {
 
 function skipConfusable(confusableCharacter) {
   let idx = availableCharacters.indexOf(confusableCharacter);
-  if (idx >= 0) {
+  if (idx >= 0 && availableCharacters.length > 1) {
     availableCharacters.splice(idx, 1);
   }
   newGame();
