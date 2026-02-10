@@ -10,8 +10,8 @@ app.use("/static", express.static("static", { maxAge: "365d" }));
 app.use(
   basicAuth({
     authorizer: (username, password) => {
-        // Barebones auth, any username works.
-        return password == "VzGkffaInLnmi7k82TjrV6Z1";
+        // Any non-blank username/password works now.
+        return username && password;
     },
     challenge: true,
     realm: 'confusables-game',
