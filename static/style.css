@@ -21,7 +21,7 @@ main {
   max-width: 60em;
   margin: auto;
   padding: 0.2em;
-  position: relative;  
+  position: relative;
   text-align: center;
   visibility: hidden;
 }
