@@ -16,7 +16,6 @@ async function restrictToUnknown() {
     const known = new Set(await response.json());
     const available = new Set(availableCharacters);
     availableCharacters = Array.from(available.difference(known));
-    console.log("%s left", availableCharacters.length);
   }
 }
 
