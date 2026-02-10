@@ -23,7 +23,7 @@ async function init() {
       if (e.target.id == "nothing") {
         recordConfusable(currrentCharacter, null);
       } else if (e.target.id == "skip") {
-        skipConfusable();
+        skipConfusable(currrentCharacter);
       }
     }
   });
@@ -63,10 +63,14 @@ function recordConfusable(confusableCharacter, alphabetCharacter) {
     }),
   });
 
-  newGame();
+  skipConfusable(confusableCharacter);
 }
 
-function skipConfusable() {
+function skipConfusable(confusableCharacter) {
+  let idx = availableCharacters.indexOf(confusableCharacter);
+  if (idx >= 0) {
+    availableCharacters.splice(idx, 1);
+  }
   newGame();
 }
 
