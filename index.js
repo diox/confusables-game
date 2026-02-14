@@ -19,7 +19,9 @@ app.use(
 );
 
 app.get("/known", function (req, res) {
-  const statement = db.prepare("SELECT DISTINCT(confusable) FROM confusables");
+  const statement = db.prepare(
+    "SELECT confusable FROM confusables GROUP BY confusable HAVING COUNT(*) > 1",
+  );
   statement.pluck();
   res.status(200).send(statement.all());
 });
